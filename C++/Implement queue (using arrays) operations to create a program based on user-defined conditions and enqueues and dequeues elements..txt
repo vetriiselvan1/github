@@ -1,0 +1,71 @@
+#include <stdio.h> 
+#define MAX 100 
+int queue[MAX]; 
+int front = -1, rear = -1, size; 
+// Function to insert an element (enqueue) 
+void enqueue(int element) { 
+if (rear == size - 1) { 
+printf("Queue Overflow! Cannot insert %d\n", element); 
+return; 
+} 
+if (front == -1) front = 0; 
+queue[++rear] = element; 
+printf("%d enqueued successfully.\n", element); 
+} 
+// Function to delete an element (dequeue) 
+void dequeue() { 
+if (front == -1 || front > rear) { 
+printf("Queue Underflow! Nothing to dequeue.\n"); 
+return; 
+} 
+printf("%d dequeued successfully.\n", queue[front++]); 
+if (front > rear) { // Reset if queue becomes empty 
+front = rear = -1; 
+} 
+} 
+// Function to display the queue 
+void display() { 
+if (front == -1) { 
+printf("Queue is empty.\n"); 
+return; 
+} 
+printf("Queue contents: "); 
+for (int i = front; i <= rear; i++) { 
+printf("%d ", queue[i]); 
+} 
+printf("\n"); 
+} 
+int main() { 
+int choice, element; 
+printf("Enter the size of the queue (max %d): ", MAX); 
+scanf("%d", &size); 
+if (size > MAX || size <= 0) { 
+printf("Invalid size! Please restart the program.\n"); 
+return 0; 
+} 
+while (1) { 
+printf("\n----- Queue Menu -----\n"); 
+printf("1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\n"); 
+printf("Enter your choice: "); 
+scanf("%d", &choice); 
+switch (choice) { 
+case 1: 
+printf("Enter element to enqueue: "); 
+scanf("%d", &element); 
+enqueue(element); 
+break; 
+case 2: 
+dequeue(); 
+break; 
+case 3: 
+display(); 
+break; 
+case 4: 
+printf("Exiting program.\n"); 
+return 0; 
+default: 
+printf("Invalid choice! Please enter 1-4.\n");         
+}     
+} 
+return 0; 
+}

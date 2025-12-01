@@ -1,0 +1,58 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+typedef struct Node { 
+int data; 
+struct Node *next; 
+} Node; 
+Node* head = NULL; 
+void insert_front(int x) { 
+Node *p = (Node*) malloc(sizeof(Node)); 
+p->data = x; 
+p->next = head; 
+head = p; 
+} 
+void delete_at_pos(int pos) { 
+int i; 
+Node *temp, *prev; 
+if (head == NULL) { printf("List empty.\n"); return; } 
+if (pos <= 0) { printf("Invalid position.\n"); return; } 
+if (pos == 1) { 
+temp = head; 
+head = head->next; 
+free(temp); 
+printf("Deleted node at position 1.\n"); 
+return; 
+} 
+prev = head; 
+for (i = 1; i < pos - 1 && prev != NULL; i++) prev = prev->next; 
+if (prev == NULL || prev->next == NULL) { 
+printf("Position out of range.\n"); 
+return; 
+} 
+temp = prev->next; 
+prev->next = temp->next; 
+free(temp); 
+printf("Deleted node at position %d.\n", pos); 
+} 
+void display() { 
+Node *p = head; 
+if (p == NULL) { printf("List is empty.\n"); return; } 
+printf("List contents: "); 
+while (p) { printf("%d ", p->data); p = p->next; } 
+printf("\n"); 
+} 
+int main() { 
+int choice, val, pos; 
+while (1) { 
+printf("\n1.InsertFront 2.DeleteAtPos 3.Display 4.Exit\nChoice: "); 
+scanf("%d", &choice); 
+switch (choice) { 
+case 1: printf("Enter value: "); scanf("%d", &val); insert_front(val); break; 
+case 2: printf("Enter position to delete: "); scanf("%d", &pos); delete_at_pos(pos); break; 
+case 3: display(); break; 
+case 4: exit(0); 
+default: printf("Invalid choice.\n"); 
+} 
+} 
+return 0; 
+}
